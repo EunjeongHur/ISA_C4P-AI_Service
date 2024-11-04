@@ -1,50 +1,38 @@
 const express = require('express');
-const { HfInference } = require("@huggingface/inference");
-require("dotenv").config();
+const axios = require('axios');
 
 const app = express();
-const hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
+const PORT = process.env.PORT || 3000;
 
+// Middleware to parse JSON requests
 app.use(express.json());
 
-// Endpoint for generating a legal response
-app.post('/generate-legal-response', async (req, res) => {
+// External URL
+const externalUrl = "https://aceb-2604-3d08-7380-17e0-b5f3-84a8-309d-5e4c.ngrok-free.app";
+
+// Endpoint to accept text from the client
+app.post('/process-text', async (req, res) => {
     try {
-        const { input } = req.body;
+        const { text } = req.body;
 
-        // Interact with the Hugging Face model
-        const result = await hf.textGeneration({
-            model: "Merdeka-LLM/merdeka-llm-lawyer-3b-128k-instruct",
-            inputs: input,
-            parameters: { max_new_tokens: 50 },
-        });
+        // Validate the input
+        if (!text) {
+            return res.status(400).json({ error: "Text parameter is required" });
+        }
 
-        // Send the model's response back to the client
-        res.status(200).json({ response: result.generated_text });
+        // Send POST request to the external URL
+        const response = await axios.post(externalUrl, { text });
+
+        // Return the response from the external service
+        res.status(200).json(response.data);
+
     } catch (error) {
-        console.error("Error generating response:", error);
-        res.status(500).json({ error: "Failed to generate response" });
+        console.error("Error processing request:", error);
+        res.status(500).json({ error: "Failed to process the request" });
     }
 });
 
-// Endpoint for summarizing text
-app.post('/summarize-text', async (req, res) => {
-    try {
-        const { input } = req.body;
-
-        // Interact with the Hugging Face model for summarization
-        const result = await hf.summarization({
-            model: "facebook/bart-large-cnn",
-            inputs: input,
-        });
-
-        // Send the summary back to the client
-        res.status(200).json({ summary: result.summary_text });
-    } catch (error) {
-        console.error("Error generating summary:", error);
-        res.status(500).json({ error: "Failed to generate summary" });
-    }
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
-
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`AI service running on port ${PORT}`));
