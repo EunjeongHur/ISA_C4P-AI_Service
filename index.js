@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // External URL
-const externalUrl = "https://5178-2604-3d08-7380-17e0-b5f3-84a8-309d-5e4c.ngrok-free.app";
+const externalUrl = "https://d68e-2604-3d08-7380-17e0-247f-10fb-7e5c-ba5e.ngrok-free.app";
 
 // Endpoint to accept text from the client
 app.post('/process-text', async (req, res) => {
