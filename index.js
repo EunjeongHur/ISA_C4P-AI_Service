@@ -9,8 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.use(cors({
-    origin: 'https://isa-c4p-frontend-7hv3.onrender.com/', // Replace with your frontend URL or '*' to allow all origins
-    credentials: true, // Enable credentials (cookies, authorization headers, TLS client certificates)
+    origin: 'https://isa-c4p-frontend-7hv3.onrender.com', // Replace with your frontend URL or '*' to allow all origins
 }));
 
 // External URL
