@@ -17,8 +17,6 @@ const externalUrl = "https://8a67-2604-3d08-7380-17e0-851c-2e0b-880f-90ee.ngrok-
 
 // Endpoint to accept text from the client
 app.post('/process-text', async (req, res) => {
-    console.log("Request body:", req.body); // Log the request body
-
     try {
         const { input } = req.body;
 
