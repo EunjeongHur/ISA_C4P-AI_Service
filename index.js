@@ -13,15 +13,15 @@ const externalUrl = "https://8a67-2604-3d08-7380-17e0-851c-2e0b-880f-90ee.ngrok-
 // Endpoint to accept text from the client
 app.post('/process-text', async (req, res) => {
     try {
-        const { text } = req.body;
+        const { input } = req.body;
 
         // Validate the input
-        if (!text) {
-            return res.status(400).json({ error: "Text parameter is required" });
+        if (!input) {
+            return res.status(400).json({ error: "Input is required" });
         }
 
         // Send POST request to the external URL
-        const response = await axios.post(externalUrl, { text });
+        const response = await axios.post(externalUrl, { input });
 
         // Return the response from the external service
         res.status(200).json(response.data);
