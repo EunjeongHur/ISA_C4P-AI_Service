@@ -1,11 +1,17 @@
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors'); // Import the cors package
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware to parse JSON requests
 app.use(express.json());
+
+app.use(cors({
+    origin: 'https://isa-c4p-frontend-7hv3.onrender.com/', // Replace with your frontend URL or '*' to allow all origins
+    credentials: true, // Enable credentials (cookies, authorization headers, TLS client certificates)
+}));
 
 // External URL
 const externalUrl = "https://8a67-2604-3d08-7380-17e0-851c-2e0b-880f-90ee.ngrok-free.app";
