@@ -13,7 +13,7 @@ app.use(cors({
 }));
 
 // External URL
-const externalUrl = "https://8a67-2604-3d08-7380-17e0-851c-2e0b-880f-90ee.ngrok-free.app";
+const externalUrl = "https://penguin-enhanced-moose.ngrok-free.app";
 
 // Endpoint to accept text from the client
 app.post('/process-text', async (req, res) => {
